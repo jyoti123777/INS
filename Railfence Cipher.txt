@@ -1,0 +1,70 @@
+# Railfence Cipher
+plain_text = input("Enter Plain Text: ").replace(" ", "").lower()
+rails = int(input("Enter number of Rails: "))
+railfence = [[" "] * len(plain_text) for _ in range(rails)]
+
+def encrypt(text, r):
+    encipher = ""
+    i = 0
+    times = 1
+    flag = True
+    for j in range(len(text)):
+        railfence[i][j] = text[j]
+        if j % r == r - times:
+            times = (times % r) + 1
+            flag = not flag
+        if flag:
+            i += 1
+        else:
+            i -= 1
+
+    print("Railfence: ")
+    for x in railfence:
+        print(x)
+
+    for x in railfence:
+        for z in x:
+            if z != " ":
+                encipher += z
+
+    return encipher
+
+print("Plain Text: ", plain_text)
+encrypted_text = encrypt(plain_text, rails)
+print("Encrypted Text: ", encrypted_text)
+
+def decrypt(text, r):
+    decipher = ""
+    i = 0
+    times = 1
+    flag = True
+    for j in range(len(text)):
+        railfence[i][j] = '*'
+        if j % r == r - times:
+            times = (times % r) + 1
+            flag = not flag
+        if flag:
+            i += 1
+        else:
+            i -= 1
+
+    index = 0
+    for k in range(r):
+        for j in range(len(text)):
+            if railfence[k][j] == '*':
+                railfence[k][j] = text[index]
+                index += 1
+
+    print("Railfence: ")
+    for x in railfence:
+        print(x)
+
+    for k in range(len(text)):
+        for j in range(r):
+            if railfence[j][k] != " ":
+                decipher += railfence[j][k]
+
+    return decipher
+
+decrypted_text = decrypt(encrypted_text, rails)
+print("Decrypted Text: ", decrypted_text

@@ -1,0 +1,36 @@
+import hashlib
+
+str = input("Enter plain text: ")
+
+# MD5
+result = hashlib.md5(str.encode())
+print("The hexadecimal equivalent of md5 is: ")
+print(result.hexdigest())
+ 
+print ("\r")
+ 
+# SHA384
+result = hashlib.sha384(str.encode())
+print("The hexadecimal equivalent of SHA384 is: ")
+print(result.hexdigest())
+ 
+print ("\r")
+
+# SHA224
+result = hashlib.sha224(str.encode())
+print("The hexadecimal equivalent of SHA224 is: ")
+print(result.hexdigest())
+
+print ("\r")
+
+# SHA512
+result = hashlib.sha512(str.encode())
+print("The hexadecimal equivalent of SHA512 is: ")
+print(result.hexdigest())
+ 
+print ("\r")
+
+# SHA1
+result = hashlib.sha1(str.encode())
+print("The hexadecimal equivalent of SHA1 is: ")
+print(result.hexdigest())

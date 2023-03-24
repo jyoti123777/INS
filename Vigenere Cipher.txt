@@ -1,0 +1,41 @@
+# Vigenere Cipher
+dictionary = ['a', 'b', 'c', 'd',
+              'e', 'f', 'g', 'h',
+              'i', 'j', 'k', 'l',
+              'm', 'n', 'o', 'p',
+              'q', 'r', 's', 't',
+              'u', 'v', 'w', 'x',
+              'y', 'z']
+
+plain_text = input("Enter Plain Text: ").lower().replace(" ", "")
+temp_key = input("Enter Key: ").lower()
+
+def encrypt(text, temp):
+    encipher = ""
+    # creating key of same length
+    key = temp * (len(text) // len(temp))
+    key += key[len(text) - len(key)]
+    for i in range(len(text)):
+        pi = dictionary.index(text[i])
+        ki = dictionary.index(key[i])
+        encipher += dictionary[((pi + ki) % 26)]
+    return encipher
+
+encrypted_text = encrypt(plain_text, temp_key)
+
+def decrypt(text, temp):
+    decipher = ""
+    # creating key of same length
+    key = temp * (len(text) // len(temp))
+    key += key[len(text) - len(key)]
+    for i in range(len(text)):
+        pi = dictionary.index(text[i])
+        ki = dictionary.index(key[i])
+        decipher += dictionary[((pi - ki) % 26)]
+    return decipher
+
+decypted_text = decrypt(encrypted_text, temp_key)
+
+print("Plain Text: ", plain_text)
+print("Encrypted Text: ", encrypted_text)
+print("Decrypted Text: ", decypted_text)

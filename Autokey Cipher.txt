@@ -1,0 +1,39 @@
+# Autokey Cipher
+dictionary = ['a', 'b', 'c', 'd',
+              'e', 'f', 'g', 'h',
+              'i', 'j', 'k', 'l',
+              'm', 'n', 'o', 'p',
+              'q', 'r', 's', 't',
+              'u', 'v', 'w', 'x',
+              'y', 'z']
+
+plain_text = input("Enter Plain Text: ").lower().replace(" ", "")
+key = "n".lower()
+
+def encrypt(text, k):
+    ki = dictionary.index(k[0])
+    pi = dictionary.index(text[0])
+    encipher = dictionary[(pi + ki) % 26]
+    for i in range(1, len(text)):
+        pi = dictionary.index(text[i])
+        ki = dictionary.index(text[i - 1])
+        encipher += dictionary[(pi + ki) % 26]
+    return encipher
+
+encrypted_text = encrypt(plain_text, key)
+
+def decrypt(text, k):
+    ki = dictionary.index(k[0])
+    pi = dictionary.index(text[0])
+    decipher = dictionary[(pi - ki) % 26]
+    for i in range(1, len(text)):
+        pi = dictionary.index(text[i])
+        ki = dictionary.index(decipher[i - 1])
+        decipher += dictionary[(pi - ki) % 26]
+    return decipher
+
+decrypted_text = decrypt(encrypted_text, key)
+
+print("Plain Text: ", plain_text)
+print("Encrypted Text: ", encrypted_text)
+print("Decrypted Text: ", decrypted_text)

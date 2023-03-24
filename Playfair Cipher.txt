@@ -1,0 +1,109 @@
+#Playfair Cipher
+#key matrix
+key = [['l','g','d','b','a'],
+       ['q','m','h','e','c'],
+       ['u','r','n','i','f'],
+       ['x','v','s','o','k'],
+       ['z','y','w','t','p']]
+       
+# Taking input and making pairs
+plain_text = input("Enter Plain Text: ").replace(" ", "").replace("j", "i").lower()
+print("Plain Text: ", plain_text)
+
+def encrypt(text):
+    bogus_letter = 'x'
+
+    seperated_letters = []
+    i = 1
+    while True:
+        try:
+            if text[i - 1] != text[i]:
+                seperated_letters.append(text[i - 1] + text[i])
+                i += 2
+            else:
+                seperated_letters.append(text[i] + bogus_letter)
+                i += 1
+        except:
+            if i == len(text):
+                seperated_letters.append(plain_text[-1] + bogus_letter)
+            break
+
+    print("Letter pairs: ", seperated_letters)
+    encipher = ""
+
+    def indexOfLetter(key, letter):
+        for i in range(len(key)):
+            for j in range(len(key)):
+                if key[i][j] == letter:
+                    return(i, j)
+    
+    # Encipher
+    for pair in seperated_letters:
+        letter1_index = indexOfLetter(key, pair[0])
+        letter2_index = indexOfLetter(key, pair[1])
+
+        # rule 1: same column
+        if letter1_index[1] == letter2_index[1]:
+            encipher += key[(letter1_index[0] + 1) % len(key)][letter1_index[1]] + key[(letter2_index[0] + 1) % len(key)][letter2_index[1]]
+
+        # rule 2: same row
+        elif letter1_index[0] == letter2_index[0]:
+            encipher += key[letter1_index[0]][(letter1_index[1] + 1) % len(key)] + key[letter2_index[0]][(letter2_index[1] + 1) % len(key)]
+        
+        # rule 3: different column and row
+        else:
+            encipher += key[letter1_index[0]][letter2_index[1]] + key[letter2_index[0]][letter1_index[1]]
+
+    return encipher
+
+encrypted_text = encrypt(plain_text)
+print("Encrypted Text: ", encrypted_text)
+
+def decrypt(text):
+    bogus_letter = 'x'
+
+    seperated_letters = []
+    i = 1
+    while True:
+        try:
+            if text[i - 1] != text[i]:
+                seperated_letters.append(text[i - 1] + text[i])
+                i += 2
+            else:
+                seperated_letters.append(text[i] + bogus_letter)
+                i += 1
+        except:
+            if i == len(text):
+                seperated_letters.append(plain_text[-1] + bogus_letter)
+            break
+
+    print("Letter pairs: ", seperated_letters)
+    decipher = ""
+
+    def indexOfLetter(key, letter):
+        for i in range(len(key)):
+            for j in range(len(key)):
+                if key[i][j] == letter:
+                    return(i, j)
+    
+    # Decipher
+    for pair in seperated_letters:
+        letter1_index = indexOfLetter(key, pair[0])
+        letter2_index = indexOfLetter(key, pair[1])
+
+        # rule 1: same column
+        if letter1_index[1] == letter2_index[1]:
+            decipher += key[(letter1_index[0] - 1) % len(key)][letter1_index[1]] + key[(letter2_index[0] - 1) % len(key)][letter2_index[1]]
+
+        # rule 2: same row
+        elif letter1_index[0] == letter2_index[0]:
+            decipher += key[letter1_index[0]][(letter1_index[1] - 1) % len(key)] + key[letter2_index[0]][(letter2_index[1] - 1) % len(key)]
+        
+        # rule 3: different column and row
+        else:
+            decipher += key[letter1_index[0]][letter2_index[1]] + key[letter2_index[0]][letter1_index[1]]
+
+    return decipher
+
+decrypted_text = decrypt(encrypted_text)
+print("Decrypted Text: ", decrypted_text)

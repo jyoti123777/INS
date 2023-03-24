@@ -1,0 +1,31 @@
+# Caesar Cipher
+dictionary = ['a', 'b', 'c', 'd',
+              'e', 'f', 'g', 'h',
+              'i', 'j', 'k', 'l',
+              'm', 'n', 'o', 'p',
+              'q', 'r', 's', 't',
+              'u', 'v', 'w', 'x',
+              'y', 'z']
+
+plain_text = input("Enter Plain Text: ").replace(" ", "").lower()
+key = int(input("Enter Key: "))
+
+def encrypt(text, k):
+    encipher = ""
+    for letter in text:
+        encipher += dictionary[(dictionary.index(letter) + k) % len(dictionary)]
+    return encipher
+
+encrypted_text = encrypt(plain_text, key)
+
+def decrypt(text, k):
+    decipher = ""
+    for letter in text:
+        decipher += dictionary[(dictionary.index(letter) - k) % len(dictionary)]
+    return decipher
+
+decrypted_text = decrypt(encrypted_text, key)
+
+print("Plain Text: ", plain_text)
+print("Encrypted Text: ", encrypted_text)
+print("Decrypted Text: ", decrypted_text)
